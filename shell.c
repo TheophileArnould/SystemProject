@@ -41,6 +41,7 @@ void changeStandarO(char* pathStandarOI){
 int main() {
     char command[MAX_COMMAND_LENGTH];
     char* args[MAX_COMMAND_LENGTH / 2 + 1];  // +1 for NULL terminator
+    int originalStdout = dup(STDOUT_FILENO);
 
     while (1) {
         printf("Shell> ");
@@ -64,12 +65,13 @@ int main() {
                 dup2(fileDescriptor, STDOUT_FILENO);
                 close(fileDescriptor);
                 token = strtok(NULL, " ");
-                continue;
+            }
+            else{
+                args[i] = token;
+                token = strtok(NULL, " ");
+                i++;
             }
             
-            args[i] = token;
-            token = strtok(NULL, " ");
-            i++;
 
         }
         args[i] = NULL;
@@ -100,6 +102,7 @@ int main() {
                 wait(NULL);
             }
         }
+        dup2(originalStdout,STDOUT_FILENO);
     }
 
     return 0;
