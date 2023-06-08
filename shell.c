@@ -57,11 +57,11 @@ int main() {
         char* token = strtok(command, " ");
         int i = 0;
         while (token != NULL) {
-            if (strcmp(token, "<") == 0) {
+            if (strcmp(token, ">") == 0) {
                 // Input redirection
                 token = strtok(NULL, " ");
-                int fileDescriptor = open(token, O_RDONLY);
-                dup2(fileDescriptor, STDIN_FILENO);
+                int fileDescriptor = open(token,  O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+                dup2(fileDescriptor, STDOUT_FILENO);
                 close(fileDescriptor);
                 token = strtok(NULL, " ");
                 continue;
