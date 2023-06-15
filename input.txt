@@ -1,5 +1,1 @@
-alice
-mark
-bob
-zinu
-presta
+5
