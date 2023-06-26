@@ -7,4 +7,6 @@ La première étape fut donc un boucle while qui regarde si on ecrit ```exit``` 
 
 La deuxième étape fut de rédiriger le working directory (wd) des processus avec la commande cd. La redirection doit se faire avant le fork car un processus ne peut modifier que son propre wd. Et non celui de son fils. Donc des que nous observons la mot ```cd``` en debut de commande nous entrons dans la phase de changement de wd et n'executerons pas la commande. Une fois le cahngement de répertoire effectuer lors de la prochaine execution de commande, le répertoire père et donc le fils aussi seront dans ke bon wd.
 
-## Gestion des entrés sorties
+## Gestion des entrés/sorties
+
+Dans cette partie nous nous sommes interessé au sorties et entrées des processus. Ces redirection ce faisait à l'aide de la fonction dup2(). Pour cela nous devions 
