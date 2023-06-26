@@ -4,6 +4,19 @@
 #include <string.h>
 #include <fcntl.h>
 
+//some color for display
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
+#define ANSI_BOLD   "\x1b[1m"
+#define ANSI_FAINT   "\x1b[2m"
+#define ANSI_ITALIC   "\x1b[3m"
+
 #define MAX_COMMAND_LENGTH 100
 #define MAX_PIPE 10
 
@@ -12,7 +25,6 @@ void printArguments(char* args[]) {
         printf("Argument %d: %s\n", i, args[i]);
     }
 }
-
 
 void executePipe(char* args[MAX_PIPE][MAX_COMMAND_LENGTH], int num_commands){
     num_commands += 1;
@@ -101,6 +113,26 @@ int main() {
     char * args[MAX_PIPE][MAX_COMMAND_LENGTH];  // +1 for NULL terminator
 
     int originalStdout = dup(STDOUT_FILENO);
+
+    printf("\e[1;1H\e[2J");
+    printf("---------Welcome to "ANSI_BOLD "Cyril"ANSI_COLOR_RESET" and "ANSI_BOLD"Theophile"ANSI_COLOR_RESET"'s terminal------------\n");
+    printf("Here are some command you can execute : \n");
+    printf(ANSI_BOLD ANSI_COLOR_MAGENTA  "ls "ANSI_COLOR_RESET"to show children directories \n");
+    printf(ANSI_BOLD ANSI_COLOR_MAGENTA  "cd "ANSI_COLOR_RESET" follow by the directory you want to go in, to change directory \n");
+    printf(ANSI_BOLD ANSI_COLOR_MAGENTA "cmd > or < file.txt " ANSI_COLOR_RESET "to redirect IO of the process \n");
+    printf(ANSI_BOLD ANSI_COLOR_MAGENTA "cmd1 | cmd2 | cmd3 " ANSI_COLOR_RESET "to pipe up to 10 commands\n");
+    printf(ANSI_BOLD ANSI_COLOR_MAGENTA "./executableFile " ANSI_COLOR_RESET "to execute a file "ANSI_ITALIC ANSI_FAINT"(you have to be in the correct working directory)\n"ANSI_COLOR_RESET);
+    printf(" \n");
+    printf(" \n");
+    char* lastWord = "AND ANY OTHER COMMAND !!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+    int size = 0;
+    for (char *t = lastWord; *t != '\0'; t++) {
+        printf("\x1b[%im%c",30 + size%8, *t);
+        size++;
+    }
+    
+    printf(ANSI_COLOR_RESET"\n\n\n");
+
 
     while (1) {
             int CommandNumber = 0;
